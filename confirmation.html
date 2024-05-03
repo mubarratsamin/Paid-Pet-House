@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 100%;
+            padding: 40px; /* Increased padding for better spacing */
+            background-color: rgb(176, 186, 218); /* Off-white container background with opacity */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Slightly elevated container */
+            text-align: center; /* Center-align content */
+            color: #333; /* Dark text color */
+            margin: 100px auto;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .confirmation {
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            background-color: rgb(176, 186, 218); /* White background */
+            display: inline-block; /* Ensures the div only takes up as much width as necessary */
+            text-align: left; /* Left-align the content inside the confirmation div */
+        }
+
+        .confirmation p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Booking Confirmation</h2>
+        <div class="confirmation" id="confirmationDetails">
+            <!-- JavaScript will populate the confirmation details here -->
+        </div>
+        <p>Thank you for booking with us!</p>
+    </div>
+
+    <script>
+        // JavaScript to retrieve data from session storage and display it
+        var bookingData = sessionStorage.getItem("bookingData");
+        if (bookingData) {
+            var data = JSON.parse(bookingData);
+
+            // Calculate total amount in taka
+            var duration = parseInt(data.duration);
+            var ratePerDay = data.petType === "dog" ? 400 : 350;
+            var totalAmountTaka = duration * ratePerDay;
+
+            // Create a string containing the HTML for the confirmation details
+            var detailsHTML = "<p><strong>Name:</strong> " + data.name + "</p>" +
+                              "<p><strong>Address:</strong> " + data.address + "</p>" +
+                              "<p><strong>Phone Number:</strong> " + data.phone + "</p>" +
+                              "<p><strong>Pet Type:</strong> " + data.petType.charAt(0).toUpperCase() + data.petType.slice(1) + "</p>" +
+                              "<p><strong>Pet Breed:</strong> " + data.breed + "</p>" +
+                              "<p><strong>Duration of Stay:</strong> " + data.duration + " Days</p>" +
+                              "<p><strong>Total Amount:</strong> " + totalAmountTaka + " Taka</p>";
+
+            // Display the confirmation details
+            document.getElementById("confirmationDetails").innerHTML = detailsHTML;
+        }
+    </script>
+</body>
+</html>
